@@ -1,1 +1,8 @@
+ion-tab-bar {
+  border: 0px;
+  --background: var(--ion-color-secondary);
+}
 
+ion-tab-button {
+  --color-selected: var(--ion-color-primary);
+}
