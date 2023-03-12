@@ -1,0 +1,54 @@
+<app-toolbar
+  [showTitle]="true"
+  [showSearch]="true"
+  (searchClicked)="onSearch()"
+  title="Discover"
+>
+</app-toolbar>
+
+<ion-content color="secondary">
+  <ion-card color="tertiary" class="p-2 pt-3 shadow-none">
+    <ion-label
+      class="text-sm rounded-full bg-slate-800 border-blue-400 border p-1 pr-2 pl-2"
+      >Being watched</ion-label
+    >
+
+    <div class="mt-4 flex gap-2 overflow-scroll">
+      <ng-container *ngIf="beingWatchedAnime">
+        <div
+          class="anime flex flex-col justify-around"
+          *ngFor="let anime of beingWatchedAnime"
+        >
+          <img
+            class="h-44 rounded shadow-lg"
+            [src]="anime.images.jpg.image_url"
+          />
+          <p class="text-xs">{{anime.title | slice:0:18}}</p>
+          <p class="text-xs mt-1 flex items-center gap-2">
+            <ion-icon name="star"></ion-icon>{{anime.score}}
+          </p>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!beingWatchedAnime">
+        <div class="flex gap-2 overflow-scroll">
+          <div class="skeleton-anime" *ngFor="let item of [1,2,3,4,5,6,7]">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-44 anime rounded w-32"
+            ></ion-skeleton-text>
+
+            <ion-skeleton-text
+              [animated]="true"
+              class="w-full rounded"
+            ></ion-skeleton-text>
+
+            <ion-skeleton-text
+              [animated]="true"
+              class="w-16 rounded"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ion-card>
+</ion-content>

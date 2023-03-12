@@ -1,0 +1,24 @@
+<app-toolbar
+  [showManualBackButton]="true"
+  [showBackButton]="true"
+  [showSearchInput]="true"
+  (manualBackButtonClicked)="dismissModal()"
+  (searchChanged)="onSearchChanged($event)"
+>
+</app-toolbar>
+<ion-content color="secondary">
+  <div class="anime-result flex flex-wrap gap-2 justify-center p-1">
+    <div class="anime w-32" *ngFor="let anime of searchedAnimes">
+      <img
+        class="h-44 object-cover rounded"
+        [src]="anime.images.jpg.image_url"
+        alt=""
+      />
+      <span class="text-sm text-slate-300"> {{ anime.title }}</span>
+    </div>
+  </div>
+
+  <ion-infinite-scroll threshold="10%" (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

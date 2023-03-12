@@ -1,5 +1,32 @@
 <ion-header mode="ios">
   <ion-toolbar color="secondary">
-    <ion-title> {{ title }} </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        *ngIf="showBackButton"
+        icon="arrow-back"
+      ></ion-back-button>
+      <ion-icon
+        *ngIf="showManualBackButton"
+        (click)="onManualBack()"
+        slot="start"
+        class="pt-3"
+        name="arrow-back"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-searchbar
+      *ngIf="showSearchInput"
+      class="mt-2"
+      placeholder="Search anime"
+      (ionChange)="onSearchChange($event)"
+      [debounce]="350"
+    ></ion-searchbar>
+    <ion-title *ngIf="showTitle"> {{ title }} </ion-title>
+    <ion-icon
+      (click)="onSearch()"
+      *ngIf="showSearch"
+      class="text-2xl mr-2"
+      slot="end"
+      name="search"
+    ></ion-icon>
   </ion-toolbar>
 </ion-header>
