@@ -30,7 +30,7 @@ export class SearchAnimeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('test');
+    console.log('test test');
   }
 
   async openAnimeDetails(anime: Anime) {
