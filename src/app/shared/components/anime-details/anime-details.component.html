@@ -1,0 +1,141 @@
+<app-toolbar
+  [showManualBackButton]="true"
+  [showBackButton]="true"
+  [showTitle]="true"
+  [title]="anime.title"
+  (manualBackButtonClicked)="dismissModal()"
+>
+</app-toolbar>
+<ion-content class="ion-padding" color="secondary">
+  <img
+    class="rounded w-28 h-40 object-cover ml-4"
+    [src]="anime.images.jpg.image_url"
+    alt=""
+  />
+  <!-- Status -->
+  <div class="bg-gray-900 rounded w-ful text-sm -mt-10 pt-12 flex">
+    <div
+      class="bg-gray-700 p-1 flex-1 flex items-center justify-center flex-col rounded-bl"
+    >
+      <span>Watching</span>
+    </div>
+    <div class="flex-1 bg-slate-800 flex items-center flex-col justify-center">
+      <span>2/12</span>
+    </div>
+    <div
+      [ngClass]="loadScoreClass(anime.score)"
+      class="flex-1 flex items-center flex-col justify-center rounded-br"
+    >
+      <span class="color-secondary">{{ anime.score }}</span>
+    </div>
+  </div>
+
+  <!-- Watch card -->
+  <div class="bg-gray-900 rounded p-2 mt-2">
+    <div class="flex flex-row justify-between mb-2">
+      <span class="text-md font-bold">Watch</span>
+      <span class="text-sm -mt-3.5 color-primary">
+        <ion-button
+          (click)="openMirrorsModal($event)"
+          fill="clear"
+          class="capitalize change-mirror-btn underline"
+        >
+          Change mirror
+        </ion-button>
+      </span>
+    </div>
+    <div class="flex flex-row mt-2 flex-wrap">
+      <!-- <ion-button class="flex-1 capitalize" expand="block" color="primary">
+        <ion-icon slot="start" name="add"></ion-icon> Add to watch-list
+      </ion-button> -->
+
+      <ion-button class="flex-1 capitalize" expand="block" color="tertiary">
+        {{ mirror }}
+      </ion-button>
+      <ion-button class="flex-4 capitalize" expand="block" color="primary">
+        +1
+      </ion-button>
+      <ion-button class="w-full capitalize" expand="block" color="secondary">
+        Update
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="background-tertiary rounded p-2 mt-2">
+    <span class="text-md font-bold">Info</span>
+    <div class="flex flex-col gap-1">
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Type:</span>
+        <span class="ml-2">{{ anime.type }}</span>
+      </div>
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Episodes:</span>
+        <span class="ml-2">{{ anime.episodes }}</span>
+      </div>
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Status:</span>
+        <span class="ml-2">{{ anime.status }}</span>
+      </div>
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Aired:</span>
+        <span class="ml-2">{{ anime.aired.string }}</span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Genres:</span>
+        <span class="ml-2">
+          <span class="ml-1" *ngFor="let genre of anime.genres">{{
+            genre.name
+          }}</span>
+        </span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Duration:</span>
+        <span class="ml-2">{{ anime.duration }}</span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Score:</span>
+        <span class="ml-2">{{ anime.score }}</span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Popularity:</span>
+        <span class="ml-2">{{ anime.popularity }}</span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Studios:</span>
+        <span class="ml-2">
+          <span class="ml-1" *ngFor="let studio of anime.studios">{{
+            studio.name
+          }}</span>
+        </span>
+      </div>
+
+      <div class="text-sm border-b border-gray-700 flex justify-between">
+        <span class="font-bold">Source:</span>
+        <span class="ml-2">{{ anime.source }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="background-secondary shadow-md rounded p-2 mt-2">
+    <span class="text-md font-bold">Description</span>
+    <div *ngIf="!showDescription" class="text-sm mt-2">
+      {{ anime.synopsis | sliceTitle : 0 : 185 }}
+      <p class="color-primary underline" (click)="toggleShowDescription()">
+        Read more
+      </p>
+    </div>
+    <div *ngIf="showDescription" class="text-sm mt-2">
+      {{ anime.synopsis }}
+      <p class="color-primary underline" (click)="toggleShowDescription()">
+        Hide text
+      </p>
+    </div>
+  </div>
+</ion-content>

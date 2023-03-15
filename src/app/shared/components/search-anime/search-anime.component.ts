@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import {
+  InfiniteScrollCustomEvent,
+  IonInfiniteScroll,
+  ModalController,
+} from '@ionic/angular';
 import { ErrorService } from '../../services/error.service';
 import { Anime } from '../../types';
+import { AnimeDetailsComponent } from '../anime-details/anime-details.component';
 import { SearchAnimeService } from './search-anime.service';
 
 @Component({
@@ -15,6 +20,8 @@ export class SearchAnimeComponent implements OnInit {
   searchedAnimes: Anime[] = [];
   searchText: string = '';
   doneLoading: boolean = false;
+  isLoading: boolean = false;
+  noResultsAvailable: boolean = false;
 
   constructor(
     private modalController: ModalController,
@@ -24,8 +31,23 @@ export class SearchAnimeComponent implements OnInit {
 
   ngOnInit() {}
 
+  async openAnimeDetails(anime: Anime) {
+    const animeModal = await this.modalController.create({
+      component: AnimeDetailsComponent,
+      componentProps: {
+        anime,
+      },
+    });
+    await animeModal.present();
+  }
+
   onIonInfinite($event: any) {
-    if (this.doneLoading) return;
+    this.isLoading = true;
+    if (this.doneLoading) {
+      this.infiniteScroll.disabled = true;
+      this.isLoading = false;
+      return;
+    }
 
     this.searchAnimeService.getSearchResults(this.searchText).subscribe({
       next: (response) => {
@@ -34,17 +56,23 @@ export class SearchAnimeComponent implements OnInit {
         } else {
           this.doneLoading = true;
         }
+        ($event as InfiniteScrollCustomEvent).target.complete();
+        this.isLoading = false;
       },
       error: (err) => {
         this.errorService.showToastError(err.statusText);
       },
     });
-    this.infiniteScroll.complete();
   }
 
   onSearchChanged(searchText: string) {
+    this.searchedAnimes = [];
+    this.isLoading = true;
+    this.noResultsAvailable = false;
+
     if (searchText === '') {
-      this.searchedAnimes = [];
+      this.isLoading = false;
+      this.infiniteScroll.disabled = false;
       return;
     }
 
@@ -55,7 +83,10 @@ export class SearchAnimeComponent implements OnInit {
       next: (response) => {
         if (response.data.length > 0) {
           this.searchedAnimes = response.data;
+        } else {
+          this.noResultsAvailable = true;
         }
+        this.isLoading = false;
       },
     });
   }

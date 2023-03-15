@@ -4,3 +4,10 @@ export enum AnimeOptions {
   SHARE = 3,
   DELETE = 4,
 }
+
+export enum AnimeFilterEnum {
+  AIRING = 'airing',
+  UPCOMING = 'upcoming',
+  POPULARITY = 'bypopularity',
+  FAVORITE = 'favorite',
+}

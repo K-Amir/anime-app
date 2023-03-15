@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AnimeResponse } from '../shared/types';
+import { AnimeFilterEnum } from '../shared/utils/options-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,9 @@ export class DiscoverService {
 
   constructor(private httpCLient: HttpClient) {}
 
-  getPopularAnime() {
+  getAnimes(filter: AnimeFilterEnum) {
     return this.httpCLient.get<AnimeResponse>(
-      `${this.apiUrl}/top/anime?filter=bypopularity`
+      `${this.apiUrl}/top/anime?filter=${filter}`
     );
   }
 }

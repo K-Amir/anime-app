@@ -8,17 +8,42 @@
 </app-toolbar>
 <ion-content color="secondary">
   <div class="anime-result flex flex-wrap gap-2 justify-center p-1">
-    <div class="anime w-32" *ngFor="let anime of searchedAnimes">
+    <div
+      (click)="openAnimeDetails(anime)"
+      class="anime w-28 md:w-32"
+      *ngFor="let anime of searchedAnimes"
+    >
       <img
         class="h-44 object-cover rounded"
         [src]="anime.images.jpg.image_url"
         alt=""
       />
-      <span class="text-sm text-slate-300"> {{ anime.title }}</span>
+      <span class="text-sm text-slate-300">
+        {{ anime.title | sliceTitle : 0 : 25 }}</span
+      >
     </div>
+
+    <ng-container *ngIf="isLoading">
+      <div
+        class="anime w-28 md:w-32"
+        *ngFor="let skeleton of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+      >
+        <ion-skeleton-text animated class="h-44 rounded"></ion-skeleton-text>
+        <ion-skeleton-text animated class="rounded"></ion-skeleton-text>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="noResultsAvailable">
+      <div class="no-items flex items-center justify-center gap-2 flex-col">
+        No results for the provided input
+        <ion-icon slot="icon-only" name="sad"></ion-icon>
+      </div>
+    </ng-container>
   </div>
 
-  <ion-infinite-scroll threshold="10%" (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+    ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { SearchAnimeComponent } from '../shared/components/search-anime/search-anime.component';
-import { Anime, AnimeResponse } from '../shared/types';
-import { DiscoverService } from './discover.service';
+import { AnimeFilterEnum } from '../shared/utils/options-enum';
 
 @Component({
   selector: 'app-discover',
@@ -10,18 +9,14 @@ import { DiscoverService } from './discover.service';
   styleUrls: ['discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-  // Variables
-  beingWatchedAnime!: Anime[];
+  popularity = AnimeFilterEnum.POPULARITY;
+  upcoming = AnimeFilterEnum.UPCOMING;
+  airing = AnimeFilterEnum.AIRING;
+  favorites = AnimeFilterEnum.FAVORITE;
 
-  constructor(
-    private discoverService: DiscoverService,
-    private toastController: ToastController,
-    private modalController: ModalController
-  ) {}
+  constructor(private modalController: ModalController) {}
 
-  ngOnInit() {
-    this.loadData();
-  }
+  ngOnInit() {}
 
   async onSearch() {
     const modal = await this.modalController.create({
@@ -29,27 +24,5 @@ export class DiscoverPage implements OnInit {
     });
 
     await modal.present();
-  }
-
-  private loadData() {
-    this.discoverService.getPopularAnime().subscribe({
-      next: (res: AnimeResponse) => {
-        this.beingWatchedAnime = res.data;
-      },
-      error: (error) => {
-        this.showError();
-      },
-    });
-  }
-
-  private showError() {
-    this.toastController
-      .create({
-        message: 'Error loading page, re-open app to fix it',
-        duration: 1500,
-        position: 'top',
-        mode: 'ios',
-      })
-      .then((toast) => toast.present());
   }
 }
