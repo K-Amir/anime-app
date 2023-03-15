@@ -29,7 +29,9 @@ export class SearchAnimeComponent implements OnInit {
     private errorService: ErrorService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('test');
+  }
 
   async openAnimeDetails(anime: Anime) {
     const animeModal = await this.modalController.create({
