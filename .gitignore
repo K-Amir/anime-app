@@ -13,7 +13,7 @@ $RECYCLE.BIN/
 log.txt
 
 .vscode
-.package-lock.json
+package-lock.json
 /.sourcemaps
 /.versions
 /coverage
