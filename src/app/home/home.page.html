@@ -24,19 +24,20 @@
   <ion-slides (ionSlideWillChange)="slideChanged()" [options]="slideOpts">
     <ion-slide>
       <ion-list class="ion-no-padding mt-4">
-        <ion-item color="secondary" class="ion-no-padding">
+        <ion-item
+          *ngFor="let anime of watchingAnimes"
+          color="secondary"
+          class="ion-no-padding"
+        >
           <ion-grid class="ion-no-padding">
             <ion-row>
               <ion-col size="2.5">
-                <img
-                  class="w-full"
-                  src="https://cdn.myanimelist.net/images/anime/1448/127956.jpg"
-                />
+                <img class="w-full" [src]="anime.images.jpg.image_url" />
               </ion-col>
               <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
                 <!-- Title and options -->
                 <div class="flex items-center justify-between flex-wrap">
-                  <p class="text-base">Bocchi the Rock!</p>
+                  <p class="text-base">{{anime.title}}</p>
                   <ion-icon
                     (click)="openAnimeSettings($event)"
                     slot="icon-only"
@@ -48,136 +49,20 @@
 
                 <!-- Episodes watched - Stars -->
                 <div class="flex justify-between text-xs flex-wrap gap-1">
-                  <span>4 / 12</span>
+                  <span>{{anime.userEpisodes}} / 12</span>
                   <div class="flex gap-2">
                     <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
                     <span
-                      class="flex items-center gap-1 bg-orange-400 px-2 rounded"
-                      >5 <ion-icon slot="icon-only" name="star"></ion-icon
+                      [ngClass]="loadScoreClass(anime.score)"
+                      class="flex items-center gap-1 px-2 rounded"
+                      >{{anime.score}}
+                      <ion-icon slot="icon-only" name="star"></ion-icon
                     ></span>
                   </div>
                   <!-- Progress bar -->
-                  <ion-progress-bar value=".25"></ion-progress-bar>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-
-        <ion-item color="secondary" class="ion-no-padding">
-          <ion-grid class="ion-no-padding">
-            <ion-row>
-              <ion-col size="2.5">
-                <img
-                  class="w-full"
-                  src="https://cdn.myanimelist.net/images/anime/1448/127956.jpg"
-                />
-              </ion-col>
-              <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
-                <!-- Title and options -->
-                <div class="flex items-center justify-between flex-wrap">
-                  <p class="text-base">Bocchi the Rock!</p>
-                  <ion-icon
-                    (click)="openAnimeSettings($event)"
-                    slot="icon-only"
-                    name="ellipsis-vertical"
-                  ></ion-icon>
-
-                  <div class="text-xs w-full">02-04-2022 / 04-04-2022</div>
-                </div>
-
-                <!-- Episodes watched - Stars -->
-                <div class="flex justify-between text-xs flex-wrap gap-1">
-                  <span>4 / 12</span>
-                  <div class="flex gap-2">
-                    <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
-                    <span
-                      class="flex items-center gap-1 bg-orange-400 px-2 rounded"
-                      >5 <ion-icon slot="icon-only" name="star"></ion-icon
-                    ></span>
-                  </div>
-                  <!-- Progress bar -->
-                  <ion-progress-bar value=".25"></ion-progress-bar>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-
-        <ion-item color="secondary" class="ion-no-padding">
-          <ion-grid class="ion-no-padding">
-            <ion-row>
-              <ion-col size="2.5">
-                <img
-                  class="w-full"
-                  src="https://cdn.myanimelist.net/images/anime/1448/127956.jpg"
-                />
-              </ion-col>
-              <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
-                <!-- Title and options -->
-                <div class="flex items-center justify-between flex-wrap">
-                  <p class="text-base">Bocchi the Rock!</p>
-                  <ion-icon
-                    (click)="openAnimeSettings($event)"
-                    slot="icon-only"
-                    name="ellipsis-vertical"
-                  ></ion-icon>
-
-                  <div class="text-xs w-full">02-04-2022 / 04-04-2022</div>
-                </div>
-
-                <!-- Episodes watched - Stars -->
-                <div class="flex justify-between text-xs flex-wrap gap-1">
-                  <span>4 / 12</span>
-                  <div class="flex gap-2">
-                    <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
-                    <span
-                      class="flex items-center gap-1 bg-orange-400 px-2 rounded"
-                      >5 <ion-icon slot="icon-only" name="star"></ion-icon
-                    ></span>
-                  </div>
-                  <!-- Progress bar -->
-                  <ion-progress-bar value=".25"></ion-progress-bar>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-
-        <ion-item color="secondary" class="ion-no-padding">
-          <ion-grid class="ion-no-padding">
-            <ion-row>
-              <ion-col size="2.5">
-                <img
-                  class="w-full"
-                  src="https://cdn.myanimelist.net/images/anime/1448/127956.jpg"
-                />
-              </ion-col>
-              <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
-                <!-- Title and options -->
-                <div class="flex items-center justify-between flex-wrap">
-                  <p class="text-base">Bocchi the Rock!</p>
-                  <ion-icon
-                    (click)="openAnimeSettings($event)"
-                    slot="icon-only"
-                    name="ellipsis-vertical"
-                  ></ion-icon>
-
-                  <div class="text-xs w-full">02-04-2022 / 04-04-2022</div>
-                </div>
-
-                <!-- Episodes watched - Stars -->
-                <div class="flex justify-between text-xs flex-wrap gap-1">
-                  <span>4 / 12</span>
-                  <div class="flex gap-2">
-                    <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
-                    <span
-                      class="flex items-center gap-1 bg-orange-400 px-2 rounded"
-                      >5 <ion-icon slot="icon-only" name="star"></ion-icon
-                    ></span>
-                  </div>
-                  <!-- Progress bar -->
-                  <ion-progress-bar value=".25"></ion-progress-bar>
+                  <ion-progress-bar
+                    [value]="calcProgress(anime.userEpisodes || 0, anime.episodes)"
+                  ></ion-progress-bar>
                 </div>
               </ion-col>
             </ion-row>

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
+import { UserlistService } from '../../services/userlist.service';
 import { Anime } from '../../types';
+import { AnimeUserStatus } from '../../utils/options-enum';
 import { MirrorPopoverComponent } from '../mirror-popover/mirror-popover.component';
 
 @Component({
@@ -13,14 +15,16 @@ export class AnimeDetailsComponent implements OnInit {
 
   showDescription: boolean = false;
   mirror: string = 'AnimeFLV';
+  addedToList: boolean = false;
 
   constructor(
     private modalController: ModalController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private userlistService: UserlistService
   ) {}
 
-  ngOnInit() {
-    console.log(this.anime);
+  async ngOnInit() {
+    await this.checkIfAnimeExistsOnList();
   }
 
   toggleShowDescription() {
@@ -33,6 +37,26 @@ export class AnimeDetailsComponent implements OnInit {
     if (score > 6 && score <= 8) return 'bg-yellow-400';
     if (score > 8 && score <= 10) return 'bg-green-400';
     return '';
+  }
+
+  addAnimeToWatch() {
+    this.userlistService.addAnimeToList({
+      ...this.anime,
+      userEpisodes: 0,
+      userStatus: AnimeUserStatus.WATCHING,
+    });
+  }
+
+  async checkIfAnimeExistsOnList() {
+    const animeFromStorage = await this.userlistService.checkIfIsOnList(
+      this.anime.mal_id
+    );
+    if (animeFromStorage) {
+      this.anime = animeFromStorage;
+      this.addedToList = true;
+      return;
+    }
+    this.addedToList = false;
   }
 
   async openMirrorsModal($event: any) {

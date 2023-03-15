@@ -1,3 +1,5 @@
+import { AnimeUserStatus } from '../utils/options-enum';
+
 export interface AnimeResponse {
   pagination: Pagination;
   data: Anime[];
@@ -17,6 +19,8 @@ export interface Items {
 }
 
 export interface Anime {
+  userStatus?: AnimeUserStatus;
+  userEpisodes?: number;
   mal_id: number;
   url: string;
   images: Images;

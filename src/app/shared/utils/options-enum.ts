@@ -11,3 +11,9 @@ export enum AnimeFilterEnum {
   POPULARITY = 'bypopularity',
   FAVORITE = 'favorite',
 }
+
+export enum AnimeUserStatus {
+  WATCHING = 'Watching',
+  PLAN = 'Plan to watch',
+  COMPLETED = 'Completed',
+}

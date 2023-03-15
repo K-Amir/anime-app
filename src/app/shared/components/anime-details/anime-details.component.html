@@ -17,10 +17,10 @@
     <div
       class="bg-gray-700 p-1 flex-1 flex items-center justify-center flex-col rounded-bl"
     >
-      <span>Watching</span>
+      <span class="capitalize">{{ anime.userStatus }}</span>
     </div>
     <div class="flex-1 bg-slate-800 flex items-center flex-col justify-center">
-      <span>2/12</span>
+      <span>{{ anime.userEpisodes }}/12</span>
     </div>
     <div
       [ngClass]="loadScoreClass(anime.score)"
@@ -45,17 +45,39 @@
       </span>
     </div>
     <div class="flex flex-row mt-2 flex-wrap">
-      <!-- <ion-button class="flex-1 capitalize" expand="block" color="primary">
-        <ion-icon slot="start" name="add"></ion-icon> Add to watch-list
-      </ion-button> -->
+      <ion-button
+        *ngIf="!addedToList"
+        class="flex-1 capitalize"
+        expand="block"
+        color="primary"
+        (click)="addAnimeToWatch()"
+      >
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add to watch
+      </ion-button>
 
-      <ion-button class="flex-1 capitalize" expand="block" color="tertiary">
+      <ion-button
+        *ngIf="addedToList"
+        class="flex-1 capitalize"
+        expand="block"
+        color="tertiary"
+      >
         {{ mirror }}
       </ion-button>
-      <ion-button class="flex-4 capitalize" expand="block" color="primary">
+      <ion-button
+        *ngIf="addedToList"
+        class="flex-4 capitalize"
+        expand="block"
+        color="primary"
+      >
         +1
       </ion-button>
-      <ion-button class="w-full capitalize" expand="block" color="secondary">
+      <ion-button
+        *ngIf="addedToList"
+        class="w-full capitalize"
+        expand="block"
+        color="secondary"
+      >
         Update
       </ion-button>
     </div>
