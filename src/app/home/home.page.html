@@ -31,7 +31,7 @@
         >
           <ion-grid class="ion-no-padding">
             <ion-row>
-              <ion-col size="2.5">
+              <ion-col (click)="openAnimeDetailsModal(anime)" size="2.5">
                 <img class="w-full" [src]="anime.images.jpg.image_url" />
               </ion-col>
               <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">

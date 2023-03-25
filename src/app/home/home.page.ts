@@ -1,5 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSegment, IonSlides, PopoverController } from '@ionic/angular';
+import {
+  IonSegment,
+  IonSlides,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
+import { AnimeDetailsComponent } from '../shared/components/anime-details/anime-details.component';
 import { OptionsComponent } from '../shared/options/options.component';
 import { UserlistService } from '../shared/services/userlist.service';
 import { Anime } from '../shared/types';
@@ -26,7 +32,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private popoverController: PopoverController,
-    private userListService: UserlistService
+    private userListService: UserlistService,
+    private modalController: ModalController
   ) {}
 
   async ngOnInit() {
@@ -60,6 +67,17 @@ export class HomePage implements OnInit {
   calcProgress(userEpisodes: number, totalEpisodes: number) {
     if (totalEpisodes === null) return 0;
     return userEpisodes / totalEpisodes;
+  }
+
+  async openAnimeDetailsModal(anime: Anime) {
+    const modal = await this.modalController.create({
+      component: AnimeDetailsComponent,
+      componentProps: {
+        anime: anime,
+      },
+    });
+
+    await modal.present();
   }
 
   categoryChanged(e: any) {
