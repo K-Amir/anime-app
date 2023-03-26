@@ -10,19 +10,19 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomePageModule),
+          import('./home/home.module').then((m) => m.HomePageModule),
       },
       {
         path: 'discover',
         loadChildren: () =>
-          import('../discover/discover.module').then(
+          import('./discover/discover.module').then(
             (m) => m.DiscoverPageModule
           ),
       },
       {
         path: 'tab3',
         loadChildren: () =>
-          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+          import('./tab3/tab3.module').then((m) => m.Tab3PageModule),
       },
       {
         path: '',

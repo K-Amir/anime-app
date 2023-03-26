@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DiscoverService } from 'src/app/discover/discover.service';
+import { DiscoverService } from 'src/app/tabs/discover/discover.service';
 import { ErrorService } from '../../services/error.service';
 import { Anime, AnimeResponse } from '../../types';
 import { AnimeFilterEnum } from '../../utils/options-enum';

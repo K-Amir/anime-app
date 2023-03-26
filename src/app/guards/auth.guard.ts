@@ -1,5 +1,12 @@
-import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
 
@@ -9,7 +16,7 @@ import { AuthService } from '../shared/auth/auth.service';
 export class AuthGuard {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canLoad(route: Route, segments: UrlSegment[]): boolean {
+  canLoad(): boolean {
     let isLoggedIn = false;
 
     // Subscribe to the $loggedIn observable to get the current value of the logged in status
@@ -29,3 +36,10 @@ export class AuthGuard {
     return false;
   }
 }
+
+export const canLoadApp: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  return inject(AuthGuard).canLoad();
+};

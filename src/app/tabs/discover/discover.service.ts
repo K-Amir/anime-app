@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AnimeResponse } from 'src/app/shared/types';
+import { AnimeFilterEnum } from 'src/app/shared/utils/options-enum';
 import { environment } from 'src/environments/environment';
-import { AnimeResponse } from '../shared/types';
-import { AnimeFilterEnum } from '../shared/utils/options-enum';
 
 @Injectable({
   providedIn: 'root',

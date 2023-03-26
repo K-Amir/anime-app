@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SearchAnimeComponent } from '../shared/components/search-anime/search-anime.component';
-import { AnimeFilterEnum } from '../shared/utils/options-enum';
+import { SearchAnimeComponent } from 'src/app/shared/components/search-anime/search-anime.component';
+import { AnimeFilterEnum } from 'src/app/shared/utils/options-enum';
 
 @Component({
   selector: 'app-discover',

@@ -5,11 +5,11 @@ import {
   ModalController,
   PopoverController,
 } from '@ionic/angular';
-import { AnimeDetailsComponent } from '../shared/components/anime-details/anime-details.component';
-import { OptionsComponent } from '../shared/options/options.component';
-import { UserlistService } from '../shared/services/userlist.service';
-import { Anime } from '../shared/types';
-import { AnimeUserStatus } from '../shared/utils/options-enum';
+import { AnimeDetailsComponent } from 'src/app/shared/components/anime-details/anime-details.component';
+import { OptionsComponent } from 'src/app/shared/options/options.component';
+import { UserlistService } from 'src/app/shared/services/userlist.service';
+import { Anime } from 'src/app/shared/types';
+import { AnimeUserStatus } from 'src/app/shared/utils/options-enum';
 
 @Component({
   selector: 'app-home',

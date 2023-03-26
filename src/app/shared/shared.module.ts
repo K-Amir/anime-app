@@ -8,6 +8,7 @@ import { DiscoverCardComponent } from './components/discover-card/discover-card.
 import { AnimeDetailsComponent } from './components/anime-details/anime-details.component';
 import { SliceTitlePipe } from './pipes/pipes.pipe';
 import { MirrorPopoverComponent } from './components/mirror-popover/mirror-popover.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MirrorPopoverComponent } from './components/mirror-popover/mirror-popov
     AnimeDetailsComponent,
     SliceTitlePipe,
     MirrorPopoverComponent,
+    AuthComponent,
   ],
   imports: [CommonModule, IonicModule],
   exports: [
@@ -27,6 +29,7 @@ import { MirrorPopoverComponent } from './components/mirror-popover/mirror-popov
     DiscoverCardComponent,
     AnimeDetailsComponent,
     SliceTitlePipe,
+    AuthComponent,
     MirrorPopoverComponent,
   ],
 })
