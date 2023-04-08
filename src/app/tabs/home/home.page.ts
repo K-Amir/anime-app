@@ -37,16 +37,17 @@ export class HomePage implements OnInit {
   }
 
   async loadAnimes() {
-    const animeList = await this.userListService.getAnimeList();
-    this.completedAnimes = animeList.filter(
-      (x) => x.userStatus === AnimeUserStatus.COMPLETED
-    );
-    this.planToWatchAnimes = animeList.filter(
-      (x) => x.userStatus === AnimeUserStatus.PLAN
-    );
-    this.watchingAnimes = animeList.filter(
-      (x) => x.userStatus === AnimeUserStatus.WATCHING
-    );
+    this.userListService.currentList.subscribe((animeList) => {
+      this.completedAnimes = animeList.filter(
+        (x) => x.userStatus === AnimeUserStatus.COMPLETED
+      );
+      this.planToWatchAnimes = animeList.filter(
+        (x) => x.userStatus === AnimeUserStatus.PLAN
+      );
+      this.watchingAnimes = animeList.filter(
+        (x) => x.userStatus === AnimeUserStatus.WATCHING
+      );
+    });
   }
 
   categoryChanged(e: any) {

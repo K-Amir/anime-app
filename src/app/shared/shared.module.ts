@@ -9,6 +9,7 @@ import { AnimeDetailsComponent } from './components/anime-details/anime-details.
 import { SliceTitlePipe } from './pipes/pipes.pipe';
 import { MirrorPopoverComponent } from './components/mirror-popover/mirror-popover.component';
 import { AnimeListComponent } from './components/anime-list/anime-list.component';
+import { OptionsModalComponent } from './components/options-modal/options-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AnimeListComponent } from './components/anime-list/anime-list.component
     SliceTitlePipe,
     MirrorPopoverComponent,
     AnimeListComponent,
+    OptionsModalComponent,
   ],
   imports: [CommonModule, IonicModule],
   exports: [
@@ -31,6 +33,7 @@ import { AnimeListComponent } from './components/anime-list/anime-list.component
     SliceTitlePipe,
     MirrorPopoverComponent,
     AnimeListComponent,
+    OptionsModalComponent,
   ],
 })
 export class SharedModule {}

@@ -12,19 +12,21 @@
         <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
           <!-- Title and options -->
           <div class="flex items-center justify-between flex-wrap">
-            <p class="text-base">{{ anime.title }}</p>
+            <p class="text-base">{{ anime.title | sliceTitle : 0 : 35 }}</p>
             <ion-icon
-              (click)="openAnimeSettings($event)"
+              (click)="openAnimeSettings($event, anime)"
               slot="icon-only"
               name="ellipsis-vertical"
             ></ion-icon>
 
-            <div class="text-xs w-full">02-04-2022 / 04-04-2022</div>
+            <div class="text-xs w-full">
+              {{ anime.aired.string }}
+            </div>
           </div>
 
           <!-- Episodes watched - Stars -->
           <div class="flex justify-between text-xs flex-wrap gap-1">
-            <span>{{ anime.userEpisodes }} / 12</span>
+            <span>{{ anime.userEpisodes }} / {{ anime.episodes }}</span>
             <div class="flex gap-2">
               <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
               <span

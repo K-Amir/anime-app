@@ -22,7 +22,11 @@
       }}</span>
     </div>
     <div class="flex-1 bg-slate-800 flex items-center flex-col justify-center">
-      <span>{{ anime.userEpisodes ? anime.userEpisodes : 0 }}/12</span>
+      <span
+        >{{ anime.userEpisodes ? anime.userEpisodes : 0 }}/{{
+          anime.episodes
+        }}</span
+      >
     </div>
     <div
       [ngClass]="loadScoreClass(anime.score)"
@@ -67,7 +71,7 @@
         {{ mirror }}
       </ion-button>
       <ion-button
-        *ngIf="addedToList"
+        *ngIf="addedToList && showAddEpisode()"
         class="flex-4 capitalize"
         expand="block"
         color="primary"

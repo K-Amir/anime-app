@@ -4,6 +4,7 @@ import { UserlistService } from '../../services/userlist.service';
 import { Anime } from '../../types';
 import { AnimeUserStatus } from '../../utils/options-enum';
 import { MirrorPopoverComponent } from '../mirror-popover/mirror-popover.component';
+import { OptionsModalComponent } from '../options-modal/options-modal.component';
 
 @Component({
   selector: 'app-anime-details',
@@ -49,11 +50,53 @@ export class AnimeDetailsComponent implements OnInit {
   }
 
   async updateEpisodesWatched() {
+    await this.checkIfSetAsCompleted();
+
+    if (this.anime.userEpisodes === this.anime.episodes) return;
     const updatedAnime = await this.userlistService.updateEpisodeWatching(
       this.anime
     );
     if (updatedAnime) {
       this.anime = updatedAnime;
+    }
+  }
+
+  async checkIfSetAsCompleted() {
+    if (
+      this.anime.userEpisodes &&
+      this.anime.userEpisodes + 1 === this.anime.episodes
+    ) {
+      // modal to set as completed
+      const setAsCompletedModal = await this.popoverController.create({
+        component: OptionsModalComponent,
+        showBackdrop: true,
+        mode: 'ios',
+        cssClass: 'options-popover',
+        componentProps: {
+          title: 'Want to set this anime as completed?',
+          options: [
+            {
+              label: 'Yes',
+              value: true,
+            },
+            {
+              label: 'No',
+              value: false,
+            },
+          ],
+        },
+      });
+      await setAsCompletedModal.present();
+
+      const popoverWillDismiss = await setAsCompletedModal.onWillDismiss();
+
+      // if user wants to set as completed then update the anime
+      if (popoverWillDismiss.data.value) {
+        await this.userlistService.changeAnimeStatus(
+          this.anime,
+          AnimeUserStatus.COMPLETED
+        );
+      }
     }
   }
 
@@ -72,7 +115,6 @@ export class AnimeDetailsComponent implements OnInit {
   async openMirrorsModal($event: any) {
     const popover = await this.popoverController.create({
       component: MirrorPopoverComponent,
-      backdropDismiss: true,
       event: $event,
     });
 
@@ -86,5 +128,10 @@ export class AnimeDetailsComponent implements OnInit {
 
   dismissModal() {
     this.modalController.dismiss();
+  }
+
+  showAddEpisode() {
+    if (!this.anime.userEpisodes) return true;
+    return this.anime.userEpisodes < this.anime.episodes;
   }
 }

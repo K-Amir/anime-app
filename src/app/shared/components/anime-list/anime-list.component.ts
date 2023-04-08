@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Anime } from '../../types';
 import { AnimeDetailsComponent } from '../anime-details/anime-details.component';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { UserlistService } from '../../services/userlist.service';
 import { OptionsComponent } from '../../options/options.component';
+import { AnimeOptions } from '../../utils/options-enum';
+import { UserlistService } from '../../services/userlist.service';
 
 @Component({
   selector: 'app-anime-list',
@@ -12,15 +13,18 @@ import { OptionsComponent } from '../../options/options.component';
 })
 export class AnimeListComponent implements OnInit {
   @Input() animeList!: Anime[];
+  @Output() updatedAnime: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private popoverController: PopoverController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private userListService: UserlistService
   ) {}
 
   ngOnInit() {}
 
   async openAnimeDetailsModal(anime: Anime) {
+    console.log(anime);
     const modal = await this.modalController.create({
       component: AnimeDetailsComponent,
       componentProps: {
@@ -29,6 +33,10 @@ export class AnimeListComponent implements OnInit {
     });
 
     await modal.present();
+
+    modal.onWillDismiss().then(() => {
+      this.updatedAnime.emit();
+    });
   }
 
   calcProgress(userEpisodes: number, totalEpisodes: number) {
@@ -36,7 +44,7 @@ export class AnimeListComponent implements OnInit {
     return userEpisodes / totalEpisodes;
   }
 
-  async openAnimeSettings(e: Event) {
+  async openAnimeSettings(e: Event, anime: Anime) {
     const popover = await this.popoverController.create({
       component: OptionsComponent,
       event: e,
@@ -44,9 +52,17 @@ export class AnimeListComponent implements OnInit {
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();
-    // Action
 
-    console.log(data);
+    if (data === AnimeOptions.DELETE) {
+      this.userListService.deleteFromList(anime).then(() => {
+        this.animeList = this.animeList.filter((x) => x.mal_id != anime.mal_id);
+        this.updatedAnime.emit();
+      });
+    }
+
+    if (data === AnimeOptions.OPEN) {
+      await this.openAnimeDetailsModal(anime);
+    }
   }
 
   loadScoreClass(score: number) {

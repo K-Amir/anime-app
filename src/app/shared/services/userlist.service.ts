@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Anime } from '../types';
 import { AnimeUserStatus } from '../utils/options-enum';
 import { StorageService } from './storage.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserlistService {
-  constructor(private storageService: StorageService) {}
+  currentList: BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
+
+  constructor(private storageService: StorageService) {
+    this.getAnimeList();
+  }
 
   async getAnimeList(): Promise<Anime[]> {
     const animeList = await this.storageService.get('user-anime-list');
@@ -15,6 +20,7 @@ export class UserlistService {
       await this.storageService.set('user-anime-list', []);
       return [];
     }
+    this.currentList.next(animeList);
     return animeList;
   }
 
@@ -35,11 +41,28 @@ export class UserlistService {
     });
 
     await this.storageService.set('user-anime-list', newList);
+    this.currentList.next(newList);
     return updatedAnime;
+  }
+
+  async deleteFromList(anime: Anime) {
+    const animeList = await this.getAnimeList();
+    const newList = animeList.filter((x) => x.mal_id != anime.mal_id);
+    await this.storageService.set('user-anime-list', newList);
+    this.currentList.next(newList);
   }
 
   async changeAnimeStatus(anime: Anime, status: AnimeUserStatus) {
     const animeList = await this.getAnimeList();
+    const newList = animeList.map((x) => {
+      if (x.mal_id === anime.mal_id) {
+        return { ...x, userStatus: status };
+      }
+      return x;
+    });
+
+    await this.storageService.set('user-anime-list', newList);
+    this.currentList.next(newList);
   }
 
   async addAnimeToList(anime: Anime): Promise<Anime> {
@@ -47,6 +70,7 @@ export class UserlistService {
     const newList = [...animeList, anime];
 
     await this.storageService.set('user-anime-list', newList);
+    this.currentList.next(newList);
     return anime;
   }
 

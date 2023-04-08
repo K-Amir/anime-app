@@ -1,0 +1,14 @@
+<div
+  class="options-modal w-fit p-2 bg-slate-600 flex items-center justify-center flex-col"
+>
+  <h2 class="text-md text-white">{{ title }}</h2>
+  <div class="flex gap-2 mt-4">
+    <div
+      class="option px-4 py-1 rounded bg-slate-700 hover:bg-slate-900 transition-all text-white"
+      *ngFor="let option of options"
+      (click)="selectOption(option)"
+    >
+      {{ option.label }}
+    </div>
+  </div>
+</div>

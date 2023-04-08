@@ -24,15 +24,24 @@
 
   <ion-slides (ionSlideWillChange)="slideChanged()" [options]="slideOpts">
     <ion-slide>
-      <app-anime-list [animeList]="watchingAnimes"></app-anime-list>
+      <app-anime-list
+        (updatedAnime)="loadAnimes()"
+        [animeList]="watchingAnimes"
+      ></app-anime-list>
     </ion-slide>
 
     <ion-slide>
-      <app-anime-list [animeList]="planToWatchAnimes"></app-anime-list
+      <app-anime-list
+        (updatedAnime)="loadAnimes()"
+        [animeList]="planToWatchAnimes"
+      ></app-anime-list
     ></ion-slide>
 
     <ion-slide>
-      <app-anime-list [animeList]="completedAnimes"></app-anime-list
+      <app-anime-list
+        (updatedAnime)="loadAnimes()"
+        [animeList]="completedAnimes"
+      ></app-anime-list
     ></ion-slide>
   </ion-slides>
 </ion-content>
