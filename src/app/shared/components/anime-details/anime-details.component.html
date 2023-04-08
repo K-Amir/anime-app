@@ -17,10 +17,12 @@
     <div
       class="bg-gray-700 p-1 flex-1 flex items-center justify-center flex-col rounded-bl"
     >
-      <span class="capitalize">{{ anime.userStatus }}</span>
+      <span class="capitalize">{{
+        anime.userStatus ? anime.userStatus : "Not in list"
+      }}</span>
     </div>
     <div class="flex-1 bg-slate-800 flex items-center flex-col justify-center">
-      <span>{{ anime.userEpisodes }}/12</span>
+      <span>{{ anime.userEpisodes ? anime.userEpisodes : 0 }}/12</span>
     </div>
     <div
       [ngClass]="loadScoreClass(anime.score)"
@@ -69,6 +71,7 @@
         class="flex-4 capitalize"
         expand="block"
         color="primary"
+        (click)="updateEpisodesWatched()"
       >
         +1
       </ion-button>

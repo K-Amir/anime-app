@@ -8,7 +8,7 @@ import { DiscoverCardComponent } from './components/discover-card/discover-card.
 import { AnimeDetailsComponent } from './components/anime-details/anime-details.component';
 import { SliceTitlePipe } from './pipes/pipes.pipe';
 import { MirrorPopoverComponent } from './components/mirror-popover/mirror-popover.component';
-import { AuthComponent } from './auth/auth.component';
+import { AnimeListComponent } from './components/anime-list/anime-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { AuthComponent } from './auth/auth.component';
     AnimeDetailsComponent,
     SliceTitlePipe,
     MirrorPopoverComponent,
-    AuthComponent,
+    AnimeListComponent,
   ],
   imports: [CommonModule, IonicModule],
   exports: [
@@ -29,8 +29,8 @@ import { AuthComponent } from './auth/auth.component';
     DiscoverCardComponent,
     AnimeDetailsComponent,
     SliceTitlePipe,
-    AuthComponent,
     MirrorPopoverComponent,
+    AnimeListComponent,
   ],
 })
 export class SharedModule {}

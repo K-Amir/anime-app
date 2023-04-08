@@ -1,0 +1,46 @@
+<ion-list class="ion-no-padding mt-4">
+  <ion-item
+    *ngFor="let anime of animeList"
+    color="secondary"
+    class="ion-no-padding"
+  >
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col (click)="openAnimeDetailsModal(anime)" size="2.5">
+          <img class="w-full" [src]="anime.images.jpg.image_url" />
+        </ion-col>
+        <ion-col class="p-1.5 flex flex-col justify-between" size="9.5">
+          <!-- Title and options -->
+          <div class="flex items-center justify-between flex-wrap">
+            <p class="text-base">{{ anime.title }}</p>
+            <ion-icon
+              (click)="openAnimeSettings($event)"
+              slot="icon-only"
+              name="ellipsis-vertical"
+            ></ion-icon>
+
+            <div class="text-xs w-full">02-04-2022 / 04-04-2022</div>
+          </div>
+
+          <!-- Episodes watched - Stars -->
+          <div class="flex justify-between text-xs flex-wrap gap-1">
+            <span>{{ anime.userEpisodes }} / 12</span>
+            <div class="flex gap-2">
+              <span class="bg-blue-400 px-2 rounded">EP5 in 21h</span>
+              <span
+                [ngClass]="loadScoreClass(anime.score)"
+                class="flex items-center gap-1 px-2 rounded"
+                >{{ anime.score }}
+                <ion-icon slot="icon-only" name="star"></ion-icon
+              ></span>
+            </div>
+            <!-- Progress bar -->
+            <ion-progress-bar
+              [value]="calcProgress(anime.userEpisodes || 0, anime.episodes)"
+            ></ion-progress-bar>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-list>

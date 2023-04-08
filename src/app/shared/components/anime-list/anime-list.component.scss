@@ -1,0 +1,18 @@
+ion-segment-button {
+  min-width: 120px;
+  color: white;
+  --indicator-color: var(--ion-color-primary);
+}
+
+ion-item {
+  --border-style: none !important;
+  --inner-padding-end: 0px;
+}
+
+ion-row {
+  margin-top: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none !important;
+  background: var(--ion-color-tertiary);
+}

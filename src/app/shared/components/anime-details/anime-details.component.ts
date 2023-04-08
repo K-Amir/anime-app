@@ -39,12 +39,22 @@ export class AnimeDetailsComponent implements OnInit {
     return '';
   }
 
-  addAnimeToWatch() {
-    this.userlistService.addAnimeToList({
+  async addAnimeToWatch() {
+    this.anime = await this.userlistService.addAnimeToList({
       ...this.anime,
       userEpisodes: 0,
       userStatus: AnimeUserStatus.WATCHING,
     });
+    await this.checkIfAnimeExistsOnList();
+  }
+
+  async updateEpisodesWatched() {
+    const updatedAnime = await this.userlistService.updateEpisodeWatching(
+      this.anime
+    );
+    if (updatedAnime) {
+      this.anime = updatedAnime;
+    }
   }
 
   async checkIfAnimeExistsOnList() {

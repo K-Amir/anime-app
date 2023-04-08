@@ -30,11 +30,7 @@ export class HomePage implements OnInit {
     speed: 400,
   };
 
-  constructor(
-    private popoverController: PopoverController,
-    private userListService: UserlistService,
-    private modalController: ModalController
-  ) {}
+  constructor(private userListService: UserlistService) {}
 
   async ngOnInit() {
     await this.loadAnimes();
@@ -53,43 +49,8 @@ export class HomePage implements OnInit {
     );
   }
 
-  async openAnimeSettings(e: Event) {
-    const popover = await this.popoverController.create({
-      component: OptionsComponent,
-      event: e,
-      showBackdrop: false,
-    });
-    await popover.present();
-    const { data } = await popover.onDidDismiss();
-    // Action
-  }
-
-  calcProgress(userEpisodes: number, totalEpisodes: number) {
-    if (totalEpisodes === null) return 0;
-    return userEpisodes / totalEpisodes;
-  }
-
-  async openAnimeDetailsModal(anime: Anime) {
-    const modal = await this.modalController.create({
-      component: AnimeDetailsComponent,
-      componentProps: {
-        anime: anime,
-      },
-    });
-
-    await modal.present();
-  }
-
   categoryChanged(e: any) {
     this.slides.slideTo(this.selectedList);
-  }
-
-  loadScoreClass(score: number) {
-    if (score > 0 && score <= 4) return 'bg-black-400';
-    if (score > 4 && score <= 6) return 'bg-red-400';
-    if (score > 6 && score <= 8) return 'bg-yellow-400';
-    if (score > 8 && score <= 10) return 'bg-green-400';
-    return '';
   }
 
   async slideChanged() {
